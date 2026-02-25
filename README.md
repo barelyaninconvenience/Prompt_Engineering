@@ -1,6 +1,6 @@
-# Prompt-Engineering
+# Prompt_Engineering
 
-## field-guide
+## Field-Guide
 
 > From First Principles to Liminal Breakthroughs — A practical, model-agnostic guide to getting exceptional results from large language models.
 
