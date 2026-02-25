@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KLEM/OS Prompt Exoskeleton — Self-Contained Starter for Claude</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&family=Source+Sans+Pro:wght@300;400;600;700&family=Fira+Code:wght@400;500&display=swap');
+:root{--ink:#1a202c;--steel:#4a5568;--light:#f7f8fa;--accent:#1a365d;--gold:#b8860b;--blue:#2b6cb0;--green:#276749;--red:#9b2c2c;--purple:#553c9a;--teal:#285e61}
+body{font-family:'Source Sans Pro',sans-serif;color:var(--ink);line-height:1.85;max-width:920px;margin:0 auto;padding:40px 60px;font-size:17px}
+h1{font-family:'Merriweather',serif;color:var(--accent);border-bottom:3px solid var(--gold);padding-bottom:12px;font-size:2em}
+h2{font-family:'Merriweather',serif;font-size:1.45em;color:var(--accent);margin:45px 0 16px;padding-bottom:6px;border-bottom:2px solid var(--gold)}
+h3{font-family:'Merriweather',serif;font-size:1.12em;color:var(--ink);margin:28px 0 10px}
+p{margin-bottom:16px;text-align:justify}
+pre{background:#1a202c;color:#e2e8f0;padding:20px 24px;border-radius:6px;overflow-x:auto;margin:20px 0;font-family:'Fira Code',monospace;font-size:0.8em;line-height:1.7;white-space:pre-wrap}
+code{font-family:'Fira Code',monospace;background:#f0f0f0;padding:2px 6px;border-radius:3px;font-size:0.87em}
+.callout{background:var(--light);border-left:4px solid var(--gold);padding:18px 24px;margin:24px 0;border-radius:0 6px 6px 0}
+.callout.green{border-color:var(--green);background:#f5fef7}
+.callout.blue{border-color:var(--blue);background:#f5f8fe}
+.callout.purple{border-color:var(--purple);background:#faf5ff}
+.callout.red{border-color:var(--red);background:#fef5f5}
+.callout.teal{border-color:var(--teal);background:#f0ffff}
+.label{font-weight:700;font-size:0.78em;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;display:block}
+table{width:100%;border-collapse:collapse;margin:20px 0;font-size:0.88em}
+th{background:var(--accent);color:#fff;padding:9px 12px;text-align:left;font-size:0.92em}
+td{padding:9px 12px;border-bottom:1px solid #e2e8f0;vertical-align:top}
+tr:nth-child(even){background:var(--light)}
+.copy-block{background:#f0fff4;border:2px solid var(--green);border-radius:8px;padding:24px;margin:24px 0}
+.copy-block .label{color:var(--green)}
+.version-tag{display:inline-block;background:var(--gold);color:#fff;padding:3px 12px;border-radius:3px;font-size:0.8em;font-weight:700}
+</style>
+</head>
+<body>
+
+<h1>KLEM/OS Prompt Exoskeleton <span class="version-tag">v1.0</span></h1>
+<p><em>Self-contained starter framework for Claude interactions — paste, customize, go.</em></p>
+<p><em>Last updated: February 2026 | Review quarterly per KLEM/OS audit framework</em></p>
+
+<!-- ============================================= -->
+<h2>1. The Ready-to-Copy Preamble</h2>
+<!-- ============================================= -->
+
+<p>This is the block you paste at the start of every fresh Claude conversation. It persists across topics within a session and encodes your identity, standards, and interaction preferences so you never waste turns re-establishing context.</p>
+
+<div class="copy-block">
+<span class="label">✂ Copy Below This Line — Paste at Start of Every New Conversation</span>
+<pre>
+CONTEXT: I'm Klem — MS-AI Engineering candidate (UC Lindner, 
+graduating 2026), 10 years IT/cybersecurity spanning SIGINT, 
+threat intelligence, solutions architecture, and network operations. 
+Army Reserves, military intelligence background, clearance-eligible. 
+Spouse has ICS/OT expertise (Honeywell/Emerson/GE Aero — DCS, PLC, 
+IIoT integration). Based in Cincinnati. Pursuing FIRE (Financial 
+Independence, Retire Early). 
+
+Building "The Substrate Thesis" — three interlocking frameworks 
+(FKS/SCC/SRD) for preserving foundational human knowledge in 
+AI-augmented systems. Developing KLEM/OS, a personal knowledge 
+operating system with RAG, multi-agent orchestration, and automated 
+content pipelines. Concurrently developing the SON OF KLEM (SOK) 
+PowerShell automation suite and the Stochastic Isolation Revision 
+(SIR) editing technique.
+
+QUALITY STANDARD:
+- Sentences must survive the Shuffle Test: self-sustaining, not 
+  dependent on neighbors for meaning
+- Technical depth WITH lay-accessible mechanism explanations — 
+  don't dumb down, do spell out acronyms on first use, explain 
+  mechanisms rather than naming them
+- Narrative prose over checklists — develop analogies, don't 
+  list them. Lists only where structurally essential (schemas, 
+  step sequences, comparison tables)
+- In-text citations for empirical claims
+- Granular specificity over repetitive padding
+- Challenge me upward. I will ask when I need clarification.
+  Do not preemptively simplify.
+
+MODE: Synthesize across domains. Prioritize intersections, 
+convergences, and gaps between disciplines over depth within 
+any single one. When I specify analytical lenses, treat them 
+as a minimum — expand beyond them where your analysis identifies 
+relevant adjacent dimensions I didn't name. Flag what I don't 
+know I don't know.
+
+EDGE PROTOCOL: When a request approaches your constraints, walk 
+me to the edge. Explain what you can provide, what you can't, 
+and why. Point me toward resources for the piece you can't 
+deliver. Maximize useful output rather than minimizing scope.
+</pre>
+</div>
+
+<p><strong>Token cost:</strong> ~280 tokens. Replaces the multi-thousand-token prompt whitepaper attachment and all "Role: AI Engineer, Expert in:" declarations. Updates should be made when: you complete a degree, add a certification, start a new major project, or refine your quality preferences based on experience.</p>
+
+<!-- ============================================= -->
+<h2>2. Session Directive Templates</h2>
+<!-- ============================================= -->
+
+<p>Paste one of these below the preamble, customized for the specific task. The four-field structure (TASK / INPUTS / LENSES / CONSTRAINTS) covers everything an LLM needs to produce high-quality output without meta-work overhead.</p>
+
+<h3>2.1 General Purpose (Customize Every Field)</h3>
+
+<div class="copy-block">
+<span class="label">✂ General Session Directive</span>
+<pre>
+TASK: [Specific deliverable — what are we building, analyzing, 
+or mapping. Be concrete: "Build a..." "Analyze the..." "Map the 
+trajectory of..." "Compare..." "Draft a..."]
+
+INPUTS: [What you're providing — attached files, prior context, 
+URLs, descriptions. If referencing prior sessions: summarize 
+the relevant insight rather than saying "as we discussed."]
+
+LENSES: At minimum — [dimension 1], [dimension 2], [dimension 3]. 
+[Add "at minimum" to authorize expansion. Add "prioritize 
+intersections between lenses" for cross-domain synthesis.]
+
+CONSTRAINTS: [Bounds — audience, format, timeline, scope limits, 
+perspective, deliverable format (HTML/DOCX/MD/code), length 
+guidance. Include "address variables I haven't considered" for 
+omnidirectional forcing.]
+</pre>
+</div>
+
+<h3>2.2 Pre-Built Archetypes</h3>
+
+<p>Copy the archetype closest to your task, customize the bracketed fields, and paste below the preamble.</p>
+
+<div class="callout blue">
+<span class="label">Archetype A — Coursework Deep-Dive</span>
+<pre>
+TASK: Develop mastery framework for [course name/number]. Build 
+from first principles through applied practice to current 
+state-of-the-art.
+
+INPUTS: [Attached syllabus, assignment specs, lecture materials]
+
+LENSES: At minimum — foundational theory, practical implementation, 
+security implications, AI/automation impact, career applicability, 
+Substrate Thesis alignment. Prioritize intersections with my 
+existing expertise.
+
+CONSTRAINTS: Graduate-level rigor. Connect to my background where 
+genuine intersections exist — don't force connections. Identify 
+specific skills or certifications this course material supports.
+</pre>
+</div>
+
+<div class="callout green">
+<span class="label">Archetype B — Technology / Industry Modernization Map</span>
+<pre>
+TASK: Map the full modernization trajectory of [domain/technology] 
+from current state to target state. Trace backward from target 
+through implementable stages. For each stage: what changes 
+mechanically, what new risks emerge, what knowledge is abstracted 
+away, where the Substrate Thesis applies.
+
+INPUTS: [Current-state description, relevant context]
+
+LENSES: At minimum — migration mechanics, data/event architecture, 
+AI/automation integration, security surface evolution, regulatory 
+friction, workforce competency impact. Prioritize intersections.
+
+CONSTRAINTS: Builder/consultant perspective, not just descriptive. 
+Identify specific companies, roles, entry points relevant to my 
+profile. Address variables I haven't considered.
+</pre>
+</div>
+
+<div class="callout purple">
+<span class="label">Archetype C — Financial / Life Strategic Planning</span>
+<pre>
+TASK: [Specific objective — retirement projection, benefits 
+optimization, investment analysis, contingency planning, 
+homesteading cost-benefit]. Address variables I haven't considered.
+
+INPUTS: [Financial data, correspondence, prior plans]
+
+LENSES: At minimum — FIRE mechanics, military benefits optimization, 
+tax strategy, self-sufficiency investment, risk mitigation, 
+opportunity cost, family security.
+
+CONSTRAINTS: Household of 3, Cincinnati metro, dual-income 
+(AI engineering + ICS/OT engineering), FIRE-oriented, family 
+security over material consumption. Provide information for 
+my own decision-making, not recommendations.
+</pre>
+</div>
+
+<div class="callout teal">
+<span class="label">Archetype D — Document / Artifact Production</span>
+<pre>
+TASK: Build [document type] on [topic]. 
+Audience: [who reads this]. 
+Purpose: [what it accomplishes].
+
+INPUTS: [Research, prior drafts, reference materials]
+
+LENSES: At minimum — [3+ domain-relevant dimensions].
+
+CONSTRAINTS: SIR quality standard — every sentence self-sustaining. 
+Narrative prose, technical depth, in-text citations, developed 
+analogies. Format: [HTML/DOCX/MD/PPTX]. 
+[Length guidance if applicable].
+</pre>
+</div>
+
+<div class="callout">
+<span class="label">Archetype E — Creative / Speculative Exploration</span>
+<pre>
+TASK: Explore [concept/question/what-if] omnidirectionally. Map 
+adjacent domains, surface non-obvious connections, identify gaps 
+in my thinking, and flag what I don't know I don't know.
+
+INPUTS: [Concept description, prior thinking, inspiration]
+
+LENSES: Let the concept dictate — but ensure at minimum: technical 
+feasibility, historical precedent, adversarial risk, market 
+viability, Substrate Thesis applicability.
+
+CONSTRAINTS: Prioritize novel intersections over obvious 
+observations. Challenge assumptions. Flag where my existing 
+mental model may be incomplete or wrong.
+</pre>
+</div>
+
+<div class="callout red">
+<span class="label">Archetype F — System / Infrastructure Audit</span>
+<pre>
+TASK: Audit [system/tool/workflow/architecture] against current 
+state-of-the-art. Identify: what's obsolete, what's optimal, 
+what should be swapped, what's missing, what's over-engineered.
+
+INPUTS: [Current system documentation, config files, architecture 
+diagrams, cost data]
+
+LENSES: At minimum — performance, cost efficiency, security 
+posture, vendor dependency risk, scalability, data sovereignty, 
+FKS substrate integrity (can the operator still function at 
+lower layers if the abstraction fails?).
+
+CONSTRAINTS: Recommendations must include: migration difficulty, 
+cost impact, timeline, and whether the swap can be tested on a 
+non-critical workflow first.
+</pre>
+</div>
+
+<!-- ============================================= -->
+<h2>3. Advanced Techniques</h2>
+<!-- ============================================= -->
+
+<h3>3.1 The Lens Expansion Trigger</h3>
+
+<p>When you suspect your initial lens list is incomplete but can't identify the missing dimensions, append this to your LENSES field:</p>
+
+<pre>
+LENSES: At minimum — [your initial lenses]. Before beginning 
+analysis, identify 2-3 additional analytical dimensions I 
+haven't named that are material to this problem. Name them 
+explicitly and include them in the analysis.
+</pre>
+
+<p>This turns the LLM's broader training into a lens-discovery tool — it identifies what you don't know you don't know before starting the work.</p>
+
+<h3>3.2 The Adversarial Self-Audit</h3>
+
+<p>For any high-stakes deliverable (patent drafts, whitepaper sections, financial plans), append this to your CONSTRAINTS field:</p>
+
+<pre>
+CONSTRAINTS: [...existing constraints]. After completing the 
+primary deliverable, adopt an adversarial posture: identify 
+the 3 strongest objections a hostile expert would raise against 
+this analysis. Address each objection explicitly — concede where 
+warranted, rebut where defensible, and flag where further 
+research is needed.
+</pre>
+
+<h3>3.3 The Cross-Session Bridge</h3>
+
+<p>When starting a new conversation that builds on a prior session, don't say "as we discussed." Instead, provide a compressed context bridge:</p>
+
+<pre>
+PRIOR CONTEXT: In a previous session, we [2-3 sentence summary 
+of the relevant outcome]. Key artifacts produced: [list with 
+one-line descriptions]. The current session builds on this by 
+[specific relationship to prior work].
+</pre>
+
+<p>This gives the new session exactly the context it needs without the baggage of a full transcript. It also forces you to articulate what was actually valuable in the prior session, which is itself a useful exercise.</p>
+
+<h3>3.4 The Depth Calibrator</h3>
+
+<p>Rather than saying "comprehensive and exhaustive" (vague), specify depth structurally:</p>
+
+<pre>
+DEPTH: Survey-level overview for [subtopics A, B], deep-dive 
+with implementation detail for [subtopic C], and exhaustive 
+with code/schemas for [subtopic D].
+</pre>
+
+<p>This allocates the LLM's output budget to the areas where depth matters most, rather than spreading effort uniformly.</p>
+
+<h3>3.5 The Iteration Directive</h3>
+
+<p>When a response needs refinement but you don't want to re-prompt from scratch:</p>
+
+<pre>
+The analysis of [specific section] needs [specific improvement: 
+more depth / different angle / correction / expansion to cover X]. 
+The rest of the response is strong. Revise only the identified 
+section, maintaining consistency with the surrounding material.
+</pre>
+
+<p>This is surgical editing rather than regeneration — it preserves the strong parts and focuses the LLM's compute on the weak spot.</p>
+
+<!-- ============================================= -->
+<h2>4. Model Selection Cheat Sheet</h2>
+<!-- ============================================= -->
+
+<p>When working within Claude.ai (the web/app interface), model selection is handled by Anthropic. When using the API for KLEM/OS automated workflows, apply this routing:</p>
+
+<table>
+<tr><th>Task Profile</th><th>Model</th><th>Why</th></tr>
+<tr><td>Sensitive/classified data processing</td><td>Ollama (Llama 3.1 8B local)</td><td>No data leaves machine</td></tr>
+<tr><td>Bulk classification, metadata extraction, triage</td><td>Claude Haiku 4.5</td><td>Fast, cheap ($0.80/MTok in), adequate for low-complexity</td></tr>
+<tr><td>Standard analysis, document generation, RAG, code</td><td>Claude Sonnet 4.5</td><td>Default workhorse. 80–90% of all calls. Best quality/cost ratio.</td></tr>
+<tr><td>Novel cross-domain synthesis, critical-path outputs</td><td>Claude Opus 4.5</td><td>Maximum reasoning depth. Reserve for tasks where Sonnet falls short.</td></tr>
+<tr><td>Embedding generation</td><td>OpenAI text-embedding-3-small</td><td>Best quality/cost for vector embeddings ($0.02/MTok)</td></tr>
+</table>
+
+<!-- ============================================= -->
+<h2>5. Constraint Navigation Guide</h2>
+<!-- ============================================= -->
+
+<p>This section encodes the understanding we reached about how to work productively at the edges of what Claude can help with.</p>
+
+<h3>5.1 No Penalty for Asking</h3>
+
+<p>There is no strike system, penalty score, or account flag for asking Claude something it can't help with. The worst outcome is a refusal with explanation. Approach any boundary freely — the iteration process <em>is</em> the edge-case discovery mechanism.</p>
+
+<h3>5.2 The Edge Protocol</h3>
+
+<p>The EDGE PROTOCOL line in the preamble instructs Claude to walk you to the boundary rather than refusing from a distance. In practice, this means:</p>
+
+<p><strong>When Claude can partially fulfill a request:</strong> It delivers the portion it can, explicitly identifies the piece it can't, explains why, and points to external resources for the remaining piece. You take it from there using your own judgment, research capabilities, and professional networks.</p>
+
+<p><strong>When a topic is contextually sensitive:</strong> Your professional profile (military intel, cybersecurity, clearance-eligible, graduate student) provides context that makes many security-adjacent topics clearly appropriate. Claude factors this in. If you're asking about attack vectors, exploit mechanics, or adversarial techniques in the context of your security work, that context matters and will generally result in a more complete response than the same question from an anonymous user.</p>
+
+<p><strong>When Claude is uncertain about the boundary:</strong> It will tell you it's uncertain, explain what it's weighing, and ask for clarification that might resolve the ambiguity. This is a conversation, not a gate.</p>
+
+<h3>5.3 Hard Limits (Non-Negotiable)</h3>
+
+<p>A small set of topics where there is no edge case and no walk-to-the-boundary:</p>
+
+<p>Weapons of mass destruction synthesis details (chemical, biological, nuclear, radiological). Functional malware code or active exploit development. Content sexualizing minors. These are absolute. The productive response to encountering one is to reframe the question toward the defensive, analytical, or educational angle — which is almost always what you actually need anyway.</p>
+
+<h3>5.4 Productive Reframes</h3>
+
+<table>
+<tr><th>If You're Working On</th><th>Ask This Way</th><th>Not This Way</th></tr>
+<tr><td>Red team / offensive security</td><td>"How does [attack vector] work mechanically, and what are the detection signatures and defensive architectures that mitigate it?"</td><td>"Write me an exploit for [vulnerability]"</td></tr>
+<tr><td>Threat intelligence</td><td>"What are the TTPs associated with [threat actor group] according to MITRE ATT&CK, and how would a defender detect each technique?"</td><td>"How would I replicate [threat actor]'s attack chain?"</td></tr>
+<tr><td>Regulatory gray areas</td><td>"What is the current legal landscape around [topic], what are the arguments on each side, and where are the open questions?"</td><td>"Is [specific action] legal?" (Claude is not a lawyer)</td></tr>
+<tr><td>Financial decisions</td><td>"What are the variables, tradeoffs, and information I need to make an informed decision about [financial choice]?"</td><td>"Should I invest in [X]?" (Claude is not a financial advisor)</td></tr>
+</table>
+
+<!-- ============================================= -->
+<h2>6. Session Lifecycle Best Practices</h2>
+<!-- ============================================= -->
+
+<h3>6.1 Starting a Session</h3>
+
+<p>Paste the preamble. Paste or customize the appropriate archetype. Attach relevant files if applicable. Go. Total setup time: under 30 seconds.</p>
+
+<h3>6.2 During a Session</h3>
+
+<p>Let the session breathe. Your best insights (SIR technique, banking-as-OT, prompt framework optimization) came from sessions where you followed tangents rather than forcing linearity. When an unexpected connection surfaces, pursue it — then redirect: "Great tangent, let's capture that and circle back to [original task]."</p>
+
+<p>Use surgical iteration (Section 3.5) rather than re-prompting from scratch when refinement is needed.</p>
+
+<h3>6.3 Ending a Session</h3>
+
+<p>Before closing a productive session, request a session summary: "Summarize this session — key deliverables, key insights, open threads, and any artifacts produced with their filenames." Save this summary as the PRIOR CONTEXT bridge for the next related session.</p>
+
+<p>If the session produced artifacts (documents, code, frameworks), ensure they've been delivered as files. If insights emerged that should be searchable later, note them for ingestion into the KLEM/OS knowledge base when that pipeline is operational.</p>
+
+<h3>6.4 Session Hygiene</h3>
+
+<p><strong>Fresh conversations for fresh topics.</strong> Don't chain unrelated tasks into a single mega-session. Context windows are large but not infinite, and accumulated history from unrelated tasks dilutes retrieval relevance and wastes tokens on irrelevant context.</p>
+
+<p><strong>Same conversation for iterative refinement.</strong> If you're building a deliverable across multiple turns (whitepaper, architecture, plan), stay in the same session so prior context is available. Use the compaction system when the conversation gets long — it preserves key information while freeing context space.</p>
+
+<p><strong>Quarterly preamble review.</strong> As your skills, certifications, projects, and preferences evolve, update the preamble. The audit framework (KLEM/OS v2, Section 5) includes a prompt framework review in the quarterly checklist. A preamble that says "MS-AI candidate" should say "MS-AI, CISSP" after you pass the cert.</p>
+
+<!-- ============================================= -->
+<h2>7. Quick Reference: The Decision Tree</h2>
+<!-- ============================================= -->
+
+<pre>
+NEW CONVERSATION?
+  │
+  ├─ YES → Paste Preamble → Select Archetype → Customize → Go
+  │
+  └─ NO (continuing session) → 
+       │
+       ├─ Same topic? → Continue directly. Use surgical iteration 
+       │                 for refinements.
+       │
+       ├─ New topic, related? → State the pivot: "Shifting to 
+       │                        [new topic], which connects to 
+       │                        [current work] via [relationship]."
+       │
+       └─ New topic, unrelated? → Consider fresh conversation.
+                                  If staying: "Parking [current 
+                                  topic]. New task: [directive]."
+
+NEED DEPTH CONTROL?
+  │
+  ├─ Uniform depth → "Comprehensive analysis of [topic]"
+  │
+  └─ Variable depth → Use Depth Calibrator (Section 3.4):
+                      "Survey [A,B], deep-dive [C], exhaustive [D]"
+
+APPROACHING A CONSTRAINT?
+  │
+  ├─ Not sure if it's a constraint → Just ask. No penalty.
+  │
+  ├─ Got a partial refusal → Use the edge: ask what CAN be 
+  │                          provided, ask for the reasoning, 
+  │                          ask for external resource pointers.
+  │
+  └─ Hard limit → Reframe toward the defensive/analytical/ 
+                  educational angle (Section 5.4).
+
+OUTPUT NOT STRONG ENOUGH?
+  │
+  ├─ Specific section weak → Surgical iteration (Section 3.5)
+  │
+  ├─ Missing dimensions → Lens Expansion Trigger (Section 3.1)
+  │
+  ├─ Too surface-level → "Go deeper on [specific subtopic]. 
+  │                       Current treatment is survey-level; 
+  │                       I need implementation detail."
+  │
+  ├─ Too narrow → "This analysis stays within [domain]. What 
+  │               am I missing from adjacent domains?"
+  │
+  └─ Prose quality poor → "Run SIR on this output. Identify 
+                           sentences that don't survive isolation."
+</pre>
+
+<!-- ============================================= -->
+<h2>8. Versioning and Maintenance</h2>
+<!-- ============================================= -->
+
+<table>
+<tr><th>Version</th><th>Date</th><th>Changes</th></tr>
+<tr><td>1.0</td><td>Feb 2026</td><td>Initial release. Preamble, 6 archetypes, 5 advanced techniques, constraint navigation guide, model routing, session lifecycle.</td></tr>
+<tr><td></td><td></td><td><em>Update this table quarterly. Store in GitHub alongside KLEM/OS codebase. The preamble is the most frequently modified component — update it whenever your professional profile changes materially.</em></td></tr>
+</table>
+
+<div class="callout green">
+<span class="label">The Principle Behind All of This</span>
+<p><strong>Tell the LLM who you are (once), what you want (specifically), what angles to consider (at minimum), and what bounds apply. Include instructions for how to handle the edges. Then get out of the way and let it synthesize. Iterate surgically. Capture what matters. Start fresh when the context is spent.</strong></p>
+</div>
+
+</body>
+</html>
